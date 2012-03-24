@@ -1,0 +1,17 @@
+=== Planning Applications ===
+Contributors: philipjohn
+Tags: planning, localgov, local government, hyperlocal, local, opendata
+Requires at least: 3.3.1
+Tested up to: 3.3.1
+
+A WordPress plugin that provides a widget for displaying nearby planning applications, based on data from OpenlyLocal.com
+
+== Description ==
+
+Provides a widget which displays a list of recent planning applications. Widget settings determine the location around which the list should focus and the number to display.
+
+== Installation ==
+
+1. Upload to the `/wp-content/plugins/` directory
+2. Activate the plugin through the 'Plugins' menu in Network Admin
+
