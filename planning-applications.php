@@ -51,6 +51,7 @@ class Planning_Applications extends WP_Widget {
 	}
 
 	function update( $new_instance, $old_instance ) {
+		var_dump(array($new_instance, $old_instance));
 		$instance = $old_instance;
 		$instance['title'] = strip_tags($new_instance['title']);
 		$instance['council_id'] =  absint($new_instance['council_id']);
