@@ -44,42 +44,55 @@ class Planning_Applications extends WP_Widget {
 	function widget( $args, $instance ) {
 		extract($args);
 		$title = apply_filters( 'widget_title', empty($instance['title']) ? '' : $instance['title'], $instance, $this->id_base);
+		$council_id = empty($instance['council_id']) ? 156 : $instance['council_id'];
+		$limit = empty($instance['limit']) ? 10 : $instance['limit'];
+		$show_addr = isset($instance['show_addr']);
+		
 		echo $before_widget;
 		if ( !empty( $title ) ) { echo $before_title . $title . $after_title; } 
-		echo widget_content($council_id);
+		echo $this->widget_content($council_id, $limit, $show_addr);
 		echo $after_widget;
 	}
 
 	function update( $new_instance, $old_instance ) {
-		var_dump(array($new_instance, $old_instance));
 		$instance = $old_instance;
 		$instance['title'] = strip_tags($new_instance['title']);
 		$instance['council_id'] =  absint($new_instance['council_id']);
+		$instance['limit'] =  absint($new_instance['limit']);
+		$instance['show_addr'] =  isset($new_instance['show_addr']);
 		return $instance;
 	}
 
 	function form( $instance ) {
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'council_id' => '' ) );
+		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'council_id' => 156, 'limit' => 10 ) );
 		$title = strip_tags($instance['title']);
 		$council_id = absint($instance['council_id']);
+		$limit = absint($instance['limit']);
+		$show_addr = isset($instance['show_addr']);
+		
 		?>
 		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></p>
 		
 		<p><label for="<?php echo $this->get_field_id('council_id'); ?>"><?php _e('Council:'); ?></label>
-		<?php echo $this->councils_drop_down($council_id); ?>
+		<?php echo $this->councils_drop_down($council_id, $this->get_field_id('council_id'), $this->get_field_name('council_id')); ?>
+		
+		<p><label for="<?php echo $this->get_field_id('limit'); ?>"><?php _e('Limit:'); ?></label>
+		<input class="widefat" id="<?php echo $this->get_field_id('limit'); ?>" name="<?php echo $this->get_field_name('limit'); ?>" type="text" value="<?php echo esc_attr($limit); ?>" /></p>
+		
+		<p><input id="<?php echo $this->get_field_id('show_addr'); ?>" name="<?php echo $this->get_field_name('show_addr'); ?>" type="checkbox" <?php checked(isset($instance['show_addr']) ? $instance['show_addr'] : 0); ?> />&nbsp;<label for="<?php echo $this->get_field_id('show_addr'); ?>"><?php _e('Show address'); ?></label></p>
 		
 		<?php
 	}
 	
 	// get the councils drop down
-	function councils_drop_down($council_id = false){
+	function councils_drop_down($council_id = false, $field_id, $field_name){
 		$data = $this->get_ol_data('http://openlylocal.com/councils.json#source=pjap_widget');
 		
 		if (empty($data)){
 			return false;
 		} else {
-			$select = '<select name="council_id" id="council_id">';
+			$select = '<select name="'.$field_name.'" id="'.$field_id.'">';
 			foreach($data->councils as $council){
 				$select .= '<option value="'.$council->id.'"';
 				$select .= ($council_id == $council->id) ? ' selected="selected"' : '';
@@ -104,15 +117,21 @@ class Planning_Applications extends WP_Widget {
 	}
 	
 	// Return the HTML list of planning apps
-	function widget_content($council_id){
+	function widget_content($council_id = 156, $limit = 10, $show_addr = false){
 		$data = $this->get_ol_data('http://openlylocal.com/councils/'.$council_id.'/planning_applications.json#source=pjap_widget');
 		
 		if (empty($data)){
 			return false;
 		} else {
+			$i = 0;
 			$list = '<ul>';
-			foreach($data->planning-applications as $app){
-				$list .= '<li><a href="'.$app->url.'">'.$app->description.'</a> <span class="address">'.$app->address.'</li>';
+			foreach ($data->planning_applications as $app){
+				$list .= '<li><a href="'.$app->url.'">'.$app->description.'</a>';
+				$list .= ($show_addr) ? ' <span class="address">'.$app->address.'</span>' : '';
+				$list .= '</li>';
+				
+				// update the counter and stop if limit reached
+				$i++; if ($i>=$limit){ break; }
 			}
 			$list .= '</ul>';
 			return $list;
