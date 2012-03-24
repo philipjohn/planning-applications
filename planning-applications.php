@@ -53,7 +53,7 @@ class Planning_Applications extends WP_Widget {
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 		$instance['title'] = strip_tags($new_instance['title']);
-		$instance['council_id'] =  $new_instance['council_id'];
+		$instance['council_id'] =  absint($new_instance['council_id']);
 		return $instance;
 	}
 
@@ -66,7 +66,7 @@ class Planning_Applications extends WP_Widget {
 		<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></p>
 		
 		<p><label for="<?php echo $this->get_field_id('council_id'); ?>"><?php _e('Council:'); ?></label>
-		<?php echo $this->councils_drop_down($instance['council_id']); ?>
+		<?php echo $this->councils_drop_down($council_id); ?>
 		
 		<?php
 	}
