@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Planning Applications\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-24 11:36-0000\n"
-"PO-Revision-Date: 2012-03-24 11:36-0000\n"
+"POT-Creation-Date: 2012-03-24 17:41-0000\n"
+"PO-Revision-Date: 2012-03-24 17:41-0000\n"
 "Last-Translator: \n"
 "Language-Team: Philip John <phil@philipjohn.co.uk>\n"
 "MIME-Version: 1.0\n"
@@ -29,25 +29,25 @@ msgstr ""
 
 #: C:\Users\Philip
 #: John\Dropbox\Web Development\WordPress
-#: Plugins\planning-alerts/planning-applications.php:74
+#: Plugins\planning-alerts/planning-applications.php:72
 msgid "Title:"
 msgstr ""
 
 #: C:\Users\Philip
 #: John\Dropbox\Web Development\WordPress
-#: Plugins\planning-alerts/planning-applications.php:77
+#: Plugins\planning-alerts/planning-applications.php:75
 msgid "Council:"
 msgstr ""
 
 #: C:\Users\Philip
 #: John\Dropbox\Web Development\WordPress
-#: Plugins\planning-alerts/planning-applications.php:80
+#: Plugins\planning-alerts/planning-applications.php:78
 msgid "Limit:"
 msgstr ""
 
 #: C:\Users\Philip
 #: John\Dropbox\Web Development\WordPress
-#: Plugins\planning-alerts/planning-applications.php:83
-msgid "Show address"
+#: Plugins\planning-alerts/planning-applications.php:81
+msgid "Show description"
 msgstr ""
 

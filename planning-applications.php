@@ -3,7 +3,7 @@
 Plugin Name: Planning Applications
 Plugin URI: http://philipjohn.co.uk/category/plugins/planning-applications/
 Description: A WordPress plugin that provides a widget for displaying nearby planning applications, based on data from OpenlyLocal.com
-Version: 0.1
+Version: 1.0
 Author: Philip John
 Author URI: http://philipjohn.co.uk
 License: GPL2
@@ -46,11 +46,10 @@ class Planning_Applications extends WP_Widget {
 		$title = apply_filters( 'widget_title', empty($instance['title']) ? '' : $instance['title'], $instance, $this->id_base);
 		$council_id = empty($instance['council_id']) ? 156 : $instance['council_id'];
 		$limit = empty($instance['limit']) ? 10 : $instance['limit'];
-		$show_addr = isset($instance['show_addr']);
 		
 		echo $before_widget;
 		if ( !empty( $title ) ) { echo $before_title . $title . $after_title; } 
-		echo $this->widget_content($council_id, $limit, $show_addr);
+		echo $this->widget_content($council_id, $limit, $instance['show_desc']);
 		echo $after_widget;
 	}
 
@@ -59,7 +58,7 @@ class Planning_Applications extends WP_Widget {
 		$instance['title'] = strip_tags($new_instance['title']);
 		$instance['council_id'] =  absint($new_instance['council_id']);
 		$instance['limit'] =  absint($new_instance['limit']);
-		$instance['show_addr'] =  isset($new_instance['show_addr']);
+		$instance['show_desc'] =  isset($new_instance['show_desc']);
 		return $instance;
 	}
 
@@ -68,7 +67,6 @@ class Planning_Applications extends WP_Widget {
 		$title = strip_tags($instance['title']);
 		$council_id = absint($instance['council_id']);
 		$limit = absint($instance['limit']);
-		$show_addr = isset($instance['show_addr']);
 		
 		?>
 		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
@@ -80,7 +78,7 @@ class Planning_Applications extends WP_Widget {
 		<p><label for="<?php echo $this->get_field_id('limit'); ?>"><?php _e('Limit:'); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id('limit'); ?>" name="<?php echo $this->get_field_name('limit'); ?>" type="text" value="<?php echo esc_attr($limit); ?>" /></p>
 		
-		<p><input id="<?php echo $this->get_field_id('show_addr'); ?>" name="<?php echo $this->get_field_name('show_addr'); ?>" type="checkbox" <?php checked(isset($instance['show_addr']) ? $instance['show_addr'] : 0); ?> />&nbsp;<label for="<?php echo $this->get_field_id('show_addr'); ?>"><?php _e('Show address'); ?></label></p>
+		<p><input id="<?php echo $this->get_field_id('show_desc'); ?>" name="<?php echo $this->get_field_name('show_desc'); ?>" type="checkbox" <?php checked(isset($instance['show_desc']) ? $instance['show_desc'] : 0); ?> />&nbsp;<label for="<?php echo $this->get_field_id('show_desc'); ?>"><?php _e('Show description'); ?></label></p>
 		
 		<?php
 	}
@@ -117,7 +115,7 @@ class Planning_Applications extends WP_Widget {
 	}
 	
 	// Return the HTML list of planning apps
-	function widget_content($council_id = 156, $limit = 10, $show_addr = false){
+	function widget_content($council_id = 156, $limit = 10, $show_desc = false){
 		$data = $this->get_ol_data('http://openlylocal.com/councils/'.$council_id.'/planning_applications.json#source=pjap_widget');
 		
 		if (empty($data)){
@@ -126,8 +124,8 @@ class Planning_Applications extends WP_Widget {
 			$i = 0;
 			$list = '<ul>';
 			foreach ($data->planning_applications as $app){
-				$list .= '<li><a href="'.$app->url.'">'.$app->description.'</a>';
-				$list .= ($show_addr) ? ' <span class="address">'.$app->address.'</span>' : '';
+				$list .= '<li><a href="'.$app->url.'">'.$app->address.'</a>';
+				$list .= ($show_desc) ? ' <span class="description">'.$app->description.'</span>' : '';
 				$list .= '</li>';
 				
 				// update the counter and stop if limit reached
