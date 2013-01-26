@@ -3,26 +3,11 @@
 Plugin Name: Planning Applications
 Plugin URI: http://philipjohn.co.uk/category/plugins/planning-applications/
 Description: A WordPress plugin that provides a widget for displaying nearby planning applications, based on data from OpenlyLocal.com
-Version: 1.0
+Version: 1.1
 Author: Philip John
 Author URI: http://philipjohn.co.uk
-License: GPL2
-
-    Copyright (C) 2012 Philip John Ltd
-
-    This program is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public License
-    as published by the Free Software Foundation; either version 2
-    of the License, or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+License: WTFPL
+License URL: http://www.wtfpl.net
 */
 
 /*
@@ -103,6 +88,9 @@ class Planning_Applications extends WP_Widget {
 	
 	// wrapper function for CURL stuff
 	function get_ol_data($url){
+		if (!function_exists('curl_init'))
+			die('cURL not installed. Please install cURL first.');
+		
 		$curl_handle=curl_init();
 		curl_setopt($curl_handle,CURLOPT_URL,$url);
 		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);
@@ -141,4 +129,11 @@ function pjpa_widget_init(){
 	register_widget('Planning_Applications');
 }
 add_action('widgets_init', 'pjpa_widget_init', 1);
+
+function pjpa_activation(){
+	if (!function_exists('curl_init'))
+		die("Unable to activate plugin because cURL is not installed.");
+}
+register_activation_hook( __FILE__, 'pjpa_activation' );
+
 ?>
