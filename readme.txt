@@ -17,9 +17,12 @@ Provides a widget which displays a list of recent planning applications. Widget 
 
 == Changelog ==
 
-= 1.0 =
-* Initial widget goodness
+= 1.2 =
+* i18n
 
 = 1.1 =
 * Added activation hook to check for cURL
 * Tested up to 3.5.1
+
+= 1.0 =
+* Initial widget goodness

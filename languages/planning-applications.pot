@@ -1,0 +1,65 @@
+# Copyright (C) 2013 Planning Applications
+# This file is distributed under the same license as the Planning Applications package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Planning Applications 1.2\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/planning-applications\n"
+"POT-Creation-Date: 2013-12-17 10:18:18+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2013-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: planning-applications.php:25
+msgid "Add a list of recent planning applications to your sidebar"
+msgstr ""
+
+#. #-#-#-#-#  planning-applications.pot (Planning Applications 1.2)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: planning-applications.php:27
+msgid "Planning Applications"
+msgstr ""
+
+#: planning-applications.php:58
+msgid "Title:"
+msgstr ""
+
+#: planning-applications.php:61
+msgid "Council:"
+msgstr ""
+
+#: planning-applications.php:64
+msgid "Limit:"
+msgstr ""
+
+#: planning-applications.php:67
+msgid "Show description"
+msgstr ""
+
+#: planning-applications.php:93
+msgid "cURL not installed. Please install cURL first."
+msgstr ""
+
+#: planning-applications.php:136
+msgid "Unable to activate plugin because cURL is not installed."
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://philipjohn.co.uk/category/plugins/planning-applications/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"A WordPress plugin that provides a widget for displaying nearby planning "
+"applications, based on data from OpenlyLocal.com"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Philip John"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://philipjohn.co.uk"
+msgstr ""

@@ -3,17 +3,18 @@
 Plugin Name: Planning Applications
 Plugin URI: http://philipjohn.co.uk/category/plugins/planning-applications/
 Description: A WordPress plugin that provides a widget for displaying nearby planning applications, based on data from OpenlyLocal.com
-Version: 1.1
+Version: 1.2
 Author: Philip John
 Author URI: http://philipjohn.co.uk
 License: WTFPL
 License URL: http://www.wtfpl.net
+Text Domain: planning-applications
 */
 
 /*
  * Localise the plugin
  */
-load_plugin_textdomain('planning-alerts');
+load_plugin_textdomain('planning-applications');
 
 /**
  * Widget class
@@ -21,9 +22,9 @@ load_plugin_textdomain('planning-alerts');
 class Planning_Applications extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array('classname' => 'widget_planning_applications', 'description' => __('Add a list of recent planning applications to your sidebar'));
+		$widget_ops = array('classname' => 'widget_planning_applications', 'description' => __('Add a list of recent planning applications to your sidebar', 'planning-applications'));
 		$control_ops = array('width' => 400, 'height' => 350);
-		parent::__construct('planning_applications', __('Planning Applications'), $widget_ops, $control_ops);
+		parent::__construct('planning_applications', __('Planning Applications', 'planning-applications'), $widget_ops, $control_ops);
 	}
 
 	function widget( $args, $instance ) {
@@ -54,16 +55,16 @@ class Planning_Applications extends WP_Widget {
 		$limit = absint($instance['limit']);
 		
 		?>
-		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
+		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'planning-applications'); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></p>
 		
-		<p><label for="<?php echo $this->get_field_id('council_id'); ?>"><?php _e('Council:'); ?></label>
+		<p><label for="<?php echo $this->get_field_id('council_id'); ?>"><?php _e('Council:', 'planning-applications'); ?></label>
 		<?php echo $this->councils_drop_down($council_id, $this->get_field_id('council_id'), $this->get_field_name('council_id')); ?>
 		
-		<p><label for="<?php echo $this->get_field_id('limit'); ?>"><?php _e('Limit:'); ?></label>
+		<p><label for="<?php echo $this->get_field_id('limit'); ?>"><?php _e('Limit:', 'planning-applications'); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id('limit'); ?>" name="<?php echo $this->get_field_name('limit'); ?>" type="text" value="<?php echo esc_attr($limit); ?>" /></p>
 		
-		<p><input id="<?php echo $this->get_field_id('show_desc'); ?>" name="<?php echo $this->get_field_name('show_desc'); ?>" type="checkbox" <?php checked(isset($instance['show_desc']) ? $instance['show_desc'] : 0); ?> />&nbsp;<label for="<?php echo $this->get_field_id('show_desc'); ?>"><?php _e('Show description'); ?></label></p>
+		<p><input id="<?php echo $this->get_field_id('show_desc'); ?>" name="<?php echo $this->get_field_name('show_desc'); ?>" type="checkbox" <?php checked(isset($instance['show_desc']) ? $instance['show_desc'] : 0); ?> />&nbsp;<label for="<?php echo $this->get_field_id('show_desc'); ?>"><?php _e('Show description', 'planning-applications'); ?></label></p>
 		
 		<?php
 	}
@@ -89,7 +90,7 @@ class Planning_Applications extends WP_Widget {
 	// wrapper function for CURL stuff
 	function get_ol_data($url){
 		if (!function_exists('curl_init'))
-			die('cURL not installed. Please install cURL first.');
+			die(__('cURL not installed. Please install cURL first.', 'planning-applications'));
 		
 		$curl_handle=curl_init();
 		curl_setopt($curl_handle,CURLOPT_URL,$url);
@@ -132,7 +133,7 @@ add_action('widgets_init', 'pjpa_widget_init', 1);
 
 function pjpa_activation(){
 	if (!function_exists('curl_init'))
-		die("Unable to activate plugin because cURL is not installed.");
+		die(__("Unable to activate plugin because cURL is not installed.", 'planning-applications'));
 }
 register_activation_hook( __FILE__, 'pjpa_activation' );
 
