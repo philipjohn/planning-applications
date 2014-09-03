@@ -2,7 +2,7 @@
 Contributors: philipjohn
 Tags: planning, localgov, local government, hyperlocal, local, opendata
 Requires at least: 3.3.1
-Tested up to: 3.9
+Tested up to: 4.0
 Stable tag: 1.2
 
 A WordPress plugin that provides a widget for displaying nearby planning applications, based on data from OpenlyLocal.com
